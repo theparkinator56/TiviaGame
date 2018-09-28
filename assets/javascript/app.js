@@ -8,43 +8,49 @@ var clockRunning = false;
 var wins = 0;
 var losses = 0;
 
-const interrogative = function() {
-    $('#questions').text("What caliber bullet does an AK-47 fire?")
-    $('#Answer1').html("5.56x45 mm")
-    $('#Answer2').text("7.62x39 mm")
-    $('#Answer3').text("308 cal")
-    $('#Answer4').text("5.45x39 mm")
-    $('#Answer2').on('click', (wins + 1))
-}
-var questions = [q1, q2, q3]
-for (var i = 0; i < questions.length; i++) {
 
-}
+interrogative1 = function() {
+    $('#questions').text("What caliber bullet does an AK-47 fire?");
+    $('#Answer1').text("5.56x45 mm");
+    $('#Answer2').text("7.62x39 mm");
+    $('#Answer3').text("308 cal");
+    $('#Answer4').text("5.45x39 mm");
+    $('#Answer2').on('click', (wins + 1), interrogative2);
+    $('#Answer1', '#Answer3', '#Answer4').on('click', interrogative2, (losses + 1))
+};
+interrogative2 = function() {
+    $('#questions').text("What caliber does an M249 SAW fire?");
+    $('#Answer1').text("5.56x45 mm");
+    $('#Answer2').text("7.62x39 mm");
+    $('#Answer3').text("308 cal");
+    $('#Answer4').text("5.45x39 mm");
+    $('#Answer1').on('click', (wins + 1), interrogative3);
+    $('#Answer2', '#Answer3', '#Answer4').on('click', interrogative3, (losses + 1))
+};
+interrogative3 = function() {
+    $('#questions').text("What caliber does a SCAR-H fire?");
+    $('#Answer1').text("5.56x45 mm");
+    $('#Answer2').text("7.62x39 mm");
+    $('#Answer3').text("308 cal");
+    $('#Answer4').text("5.45x39 mm");
+    $('#Answer3').on('click', (wins + 1));
+    $('#Answer1', '#Answer2', '#Answer4').on('click', (losses + 1))
+};
 
 
 
-const timeLeft = {
+var timeLeft = {
 
  time: 30,
-
-
- reset: function() {
-
-   timeLeft.time = 30;
-
-
-
-   $("#timer").text("00:30");
-
-
- },
  start: function() {
-
-
+     timeLeft.time = 30;
+     
    if (!clockRunning) {
      intervalId = setInterval(timeLeft.count, 1000);
      clockRunning = true;
-     interrogative();
+     interrogative1();
+     wins = 0
+     losses = 0
    }
  },
  stop: function() {
@@ -61,7 +67,7 @@ const timeLeft = {
 
 
    var converted = timeLeft.timeConverter(timeLeft.time);
-   console.log(converted);
+
 
 
    $("#timer").html("<h3>Time Left: </h3>" + converted);
@@ -85,3 +91,8 @@ const timeLeft = {
    return minutes + ":" + seconds;
  }
 };
+if (timeLeft.time=0) {
+    console.log("times up");
+    timeLeft.stop;
+    alert("Times up! Questions correct: "+ wins + "Questions incorrect: " + losses)
+    }
